@@ -15,7 +15,10 @@ python main.py
 6. **Output**
 * Each generated visualization file is saved in the plots directory with a unique name to prevent overwriting previous images.
 
-
+## **Prerequisites**
+  ```
+  pip install pandas matplotlib numpy openpyxl click
+  ```
 
 ## **Features**
 Visualizes binary and ternary compounds based on their formulas
@@ -56,6 +59,8 @@ This tool requires the following Python libraries:
 * numpy
 * openpyxl (to handle Excel files)
 
-  `pip install pandas matplotlib numpy openpyxl click`
+  ```
+  pip install pandas matplotlib numpy openpyxl click
+  ```
 
 
