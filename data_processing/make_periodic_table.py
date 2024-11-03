@@ -51,7 +51,7 @@ def periodic_table_circle(ax, df):
 
         # Plot the element as a circle
         ax.add_patch(plt.Circle((x, y), 0.3, fill=None, edgecolor='black', lw=2))
-        ax.text(x, y, symbol, ha='center', va='center', fontsize=18)
+        ax.text(x, y, symbol, ha='center', va='center', fontsize=18, zorder=5)
 
     return ax
 
@@ -68,6 +68,6 @@ def periodic_table_rectangle(ax, df):
 
         # Plot the element as a rectangle
         ax.add_patch(plt.Rectangle((x - 0.5, y - 0.5), 1, 1, fill=None, edgecolor='black', lw=2))
-        ax.text(x, y, symbol, ha='center', va='center', fontsize=24, weight='bold')
+        ax.text(x, y, symbol, ha='center', va='center', fontsize=24, weight='bold', zorder=5)
 
     return ax

@@ -4,7 +4,7 @@ from data_processing.calculate_compound_coord import calculate_coordinates
 from data_processing.markers import marker_types, colors
 from matplotlib import pyplot as plt
 
-def save_plot_with_unique_name(structure, coord_sheet_name, ax, folder="plots"):
+def save_plot(structure, coord_sheet_name, ax, folder="plots"):
     # Ensure the folder exists
     os.makedirs(folder, exist_ok=True)
 
@@ -88,10 +88,10 @@ def display_binary_data_type(ax, compounds, element_dict, coord_sheet_name):
                 ax.add_patch(plt.Rectangle((x - offset, y - offset), size, size, fill=False, edgecolor=color, zorder=4,
                                            linewidth=5, alpha=0.8))
             else:
-                shrink_factor = 0.05 * count  # Smaller shrink for each additional color
-                size = 0.25 - shrink_factor  # Start with 0.92 and decrease with each rectangle
+                shrink_factor = 0.054 * count  # Smaller shrink for each additional color
+                size = 0.26 - shrink_factor  # Start with 0.92 and decrease with each rectangle
                 ax.add_patch(plt.Circle((x, y), size, fill=False, edgecolor=color, zorder=4,
-                                        linewidth=5, alpha=0.8))
+                                        linewidth=4, alpha=0.8))
             # Mark this color as applied to this (x, y)
             applied_colors[(x, y)].add(color)
 
@@ -109,4 +109,4 @@ def display_binary_data_type(ax, compounds, element_dict, coord_sheet_name):
     )
 
     # Use the helper function to save the plot with a unique name
-    save_plot_with_unique_name(structure, coord_sheet_name, ax)
+    save_plot(structure, coord_sheet_name, ax)
