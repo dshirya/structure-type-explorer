@@ -4,6 +4,11 @@
 ## **Overview**
 This repository contains a Python-based tool for visualizing binary and ternary compounds based on their chemical formulas. The tool uses Excel data to plot compounds on various periodic table formats and calculates the average coordinates of each compound based on its molar ratios.
 
+
+To run the program:
+```
+python main.py
+```
 ## **Features**
 Visualizes binary and ternary compounds based on their formulas
 * Supports different periodic table formats:
@@ -35,18 +40,17 @@ The input file is an Excel file (.xlsx) containing:
 
 * The program calculates the molar ratio of elements in the formula.
 * The average coordinate of the compound on the selected periodic table format is determined based on the elements’ positions and their stoichiometric ratios.
-* Users can specify binary or ternary data for visualization.
 
 
 ## **Prerequisites**
 This tool requires the following Python libraries:
 
 * pandas
-* argparse
+* click
 * matplotlib
 * numpy
 * openpyxl (to handle Excel files)
 
-  `pip install pandas matplotlib numpy openpyxl`
+  `pip install pandas matplotlib numpy openpyxl click`
 
 
