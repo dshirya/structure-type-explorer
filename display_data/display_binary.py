@@ -1,8 +1,30 @@
+import os
 from data_processing.verify_elements import verify_elements
 from data_processing.calculate_compound_coord import calculate_coordinates
 from data_processing.markers import marker_types, colors
 from matplotlib import pyplot as plt
 
+def save_plot_with_unique_name(structure, coord_sheet_name, ax, folder="plots"):
+    # Ensure the folder exists
+    os.makedirs(folder, exist_ok=True)
+
+    # Sanitize the file name components
+    structure_clean = structure.replace(" ", "_")
+    coord_sheet_clean = coord_sheet_name.replace(" ", "_")
+
+    # Initial filename template
+    base_filename = f"{structure_clean}_{coord_sheet_clean}.png"
+    file_path = os.path.join(folder, base_filename)
+
+    # Check if a file with this name exists, and increment if necessary
+    counter = 1
+    while os.path.exists(file_path):
+        file_path = os.path.join(folder, f"{structure_clean}_{coord_sheet_clean}_{counter}.png")
+        counter += 1
+
+    # Save the plot with the unique file path
+    plt.savefig(file_path, dpi=600, bbox_inches='tight')
+    print(f"Plot saved as {file_path}")
 
 def display_binary_data_type(ax, compounds, element_dict, coord_sheet_name):
     # Danila's code here (Edited a bit to work properly).
@@ -58,7 +80,6 @@ def display_binary_data_type(ax, compounds, element_dict, coord_sheet_name):
             count = rectangle_counts[(x, y)]
 
             # Draw the rectangle with the current size and offset
-
             if "table" in coord_sheet_name.lower():
                 # Calculate size and offset for the new rectangle (progressively smaller)
                 shrink_factor = 0.15 * count  # Smaller shrink for each additional color
@@ -86,5 +107,6 @@ def display_binary_data_type(ax, compounds, element_dict, coord_sheet_name):
         markerscale=1,  # Increases the size of markers in the legend
         ncol=3
     )
-    plt.savefig("binary.png", dpi=600, bbox_inches='tight')
-    #plt.show()
+
+    # Use the helper function to save the plot with a unique name
+    save_plot_with_unique_name(structure, coord_sheet_name, ax)

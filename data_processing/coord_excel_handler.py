@@ -2,7 +2,7 @@ import pandas as pd
 
 
 def excel_to_dataframe():
-    file_name = 'table_coordinates.xlsx'
+    file_name = 'program_data/table_coordinates.xlsx'
     excel_file = pd.ExcelFile(file_name)
     print("Available sheets:")
     for idx, sheet in enumerate(excel_file.sheet_names, 1):
