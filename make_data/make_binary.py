@@ -16,7 +16,7 @@ def make_binary_data(excel_file, user_input_sheet_numbers):
             structure = structure.split(',')[0].strip()
             compound = Compound(formula, structure)
             if len(compound.elements) != 2:
-                print(f'Non-binary data detected ({compound.formula}). -b flag is not good for this data type!')
+                print(f'Non-binary data detected ({compound.formula}).')
                 sys.exit()
             else:
                 compounds.append(compound)
