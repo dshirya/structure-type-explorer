@@ -1,10 +1,12 @@
 import click
+import os
 from data_processing.input_handler import input_handler, list_excel_files
 from data_processing.coord_excel_handler import *
 from data_processing.make_periodic_table import periodic_table
 from make_data import *
 from display_data import *
 from data_processing.compound_object import pick_what_separate  
+from make_data.neighbors_search import recommendation_system, save_recommendations_to_excel
 
 @click.command()
 def main():
@@ -32,10 +34,16 @@ def main():
             compound.separate_by_element(target_element)
         # Sort compounds to move modified structures with "(with {element})" to the end
         compounds.sort(key=lambda x: f"(with {target_element})" in x.structure)
-    display_binary_data_type(periodic_table_ax, compounds, element_dict, coord_sheet_name)
+    
+        # Display binary data type on the periodic table visualization
+        display_binary_data_type(periodic_table_ax, compounds, element_dict, coord_sheet_name)
+
+        # Generate recommendations and save them to an Excel file
+        top_n = 50  # Specify the number of top recommendations to save (you can adjust this)
+        recommendations = recommendation_system(compounds, target_element, element_dict, top_n)
+        save_recommendations_to_excel(recommendations, target_element)
 
     return 0
-
 
 if __name__ == '__main__':
     main()
