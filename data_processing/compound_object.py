@@ -1,4 +1,5 @@
 import re
+import click
 
 class Compound:
     def __init__(self, formula, structure):
@@ -20,20 +21,12 @@ class Compound:
             # Modify the structure name if the element is present
             self.structure += f" (with {target_element})"
 
-def ask_to_separate(message, default=True):
-    """Custom confirmation function with a default Y/n response."""
-    default_str = "Y/n" if default else "y/N"
-    response = input(f"{message} ({default_str}): ").strip().lower()
-    if not response:  # If Enter is pressed with no input
-        return default
-    return response == 'y'
-
 def pick_what_separate():
     """Asks the user if they want to separate formulas by a specific element and proceeds if yes."""
-    if ask_to_separate("Do you want to separate formulas with a certain element?"):
+    if click.confirm("Do you want to separate formulas with a certain element?", default=True):
         # Ask which element to filter by
-        target_element = input("Which element? ").strip()
+        target_element = click.prompt("Which element?", type=str).strip()
         return target_element
     else:
-        print("Skipping separation by element.")
-        return None
+        target_element = None
+        return target_element

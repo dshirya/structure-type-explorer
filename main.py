@@ -28,13 +28,14 @@ def main():
 
     # Generate the compound data
     compounds = make_binary_data(file_path, user_input_sheet_numbers)
-    target_element = pick_what_separate()
+    target_element = pick_what_separate()  # This will always prompt the user
+
     if target_element:
         for compound in compounds:
             compound.separate_by_element(target_element)
         # Sort compounds to move modified structures with "(with {element})" to the end
         compounds.sort(key=lambda x: f"(with {target_element})" in x.structure)
-    
+
         # Display binary data type on the periodic table visualization
         display_binary_data_type(periodic_table_ax, compounds, element_dict, coord_sheet_name)
 
@@ -42,6 +43,13 @@ def main():
         top_n = 50  # Specify the number of top recommendations to save (you can adjust this)
         recommendations = recommendation_system(compounds, target_element, element_dict, top_n)
         save_recommendations_to_excel(recommendations, target_element)
+    else:
+        click.echo("Continuing without separating by any element.")
+        # Display binary data type on the periodic table visualization
+        display_binary_data_type(periodic_table_ax, compounds, element_dict, coord_sheet_name)
+
+    # Program continues to run even if no element is chosen for separation
+    click.echo("Program completed successfully.")
 
     return 0
 
