@@ -20,7 +20,7 @@ The program will prompt you to choose an Excel file from the same directory as t
 	3.	Separated Periodic Table (p-block, d-block, and f-block elements are visually separated)  
 	4.	PCA Table (customizable layout based on PCA values)
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/0638f8bd-0bda-4240-b672-69cdfd4d5b7c" alt="plot_PCA" width="1200"/>
+  <img src="https://github.com/user-attachments/assets/0638f8bd-0bda-4240-b672-69cdfd4d5b7c" alt="plot_PCA" width="800"/>
 	</div>
  
 5. **Select whether you want to fix a specific element from other compounds**  
@@ -35,12 +35,8 @@ Visualizations are saved as high-resolution image files in the plots directory. 
 
 ### Visualize Compounds  
 
-STEx supports binary and ternary compounds visualization with user-customizable layouts  
-Periodic Table Formats:  
-	1.	Classical  
-	2.	Long Periodic Table  
-	3.	Separated Periodic Table  
-	4.	PCA-based Periodic Table  
+STEx supports binary compounds visualization with user-customizable layouts  
+
 ### Dynamic Excel Sheet Loading  
 
 * Select one or multiple sheets for simultaneous visualization   
@@ -60,8 +56,8 @@ Periodic Table Formats:
 ### Input Data
 
 The input file must be an Excel file (.xlsx) containing:
-	1. Formula: The chemical formula of the compound (e.g., Fe2O3)
-	2. Entry Prototype: A classification or structural label for the compound
+* Formula: The chemical formula of the compound (e.g., Fe2O3)  
+* Entry Prototype: A classification or structural label for the compound  
 
 Ensure the file is pre-sorted and filtered for binary structures with elements present in the periodic table.
 
