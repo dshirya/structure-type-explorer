@@ -1,4 +1,4 @@
-# Binary system exploration tool
+# Structure type explorer (STEx)
 
 ## **How it works?**
 1. **Run the program**
