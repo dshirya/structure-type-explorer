@@ -23,7 +23,7 @@ class Compound:
 
 def pick_what_separate():
     """Asks the user if they want to separate formulas by a specific element and proceeds if yes."""
-    if click.confirm("Do you want to separate formulas with a certain element?", default=True):
+    if click.confirm("Do you want to fix a certain element?", default=True):
         # Ask which element to filter by
         target_element = click.prompt("Which element?", type=str).strip()
         return target_element

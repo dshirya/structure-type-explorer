@@ -23,9 +23,9 @@ colors = [
 shape_linewidth = 2  # Line width for shapes (circles/rectangles)
 
 # Plot
-circle_radius = 0.34  # Radius for circles in periodic table (default 0.3)
-circle_size = 0.30  # Default size for color circles (default 0.26)
-shrink_factor_circle = 0.054  # How much each circle shrinks with additional layers (default 0.054)
+circle_radius = 0.30  # Radius for circles in periodic table (default 0.3)
+circle_size = 0.26  # Default size for color circles (default 0.26)
+shrink_factor_circle = 0.054  # How much each circle shrinks with additional layers (better not to change) (default 0.054)
 text_fontsize_circle = 18  # Font size for text in circles (default 18)
 
 # Table 
