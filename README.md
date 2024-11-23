@@ -4,8 +4,9 @@ A powerful Python-based tool for visualizing binary compounds on periodic tables
 
 ## **How it works?**
 <div align="center">
-<img src="https://github.com/user-attachments/assets/ea766332-292a-4ab6-bad6-49bc1aa0fd57" alt="plot_PCA" width="600">
+<img src="https://github.com/user-attachments/assets/f0543d38-0f01-4491-bee2-cb36f4ef2141" alt="plot_PCA" width="600">
 </div>
+
 
 1. **Run the program**
 ```
