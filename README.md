@@ -1,19 +1,29 @@
-# Structure type explorer (STEx)
+# Structure Type Explorer (STEx)
+
+A powerful Python-based tool for visualizing binary compounds on periodic tables and recommending elements for novel compound discovery.
 
 ## **How it works?**
+
+<img src="https://github.com/user-attachments/assets/ea766332-292a-4ab6-bad6-49bc1aa0fd57" alt="plot_PCA" width="600"/>
+
 1. **Run the program**
 ```
 python main.py
 ```
-
 2. **Select the file:**
 * The program will prompt you to choose an Excel file from the same directory as the main.py file. You’ll see a list of available files, and you can select the desired file by entering its corresponding number.
 3. **Select table type**
-4. **Select whether you want to separate compounds with a specific element from other compounds**
-5. **Data processing and visualization:**
-* The program processes the selected Excel file, extracts relevant data, and generates a visualization based on binary compound information.
+  Select from one of the four predefined periodic table layouts:
+	1.	Classical Periodic Table
+	2.	Long Periodic Table (f-block elements are not separated)
+	3.	Separated Periodic Table (p-block, d-block, and f-block elements are visually separated)
+	4.	PCA Table (customizable layout based on PCA values).
+4. **Select whether you want to fix a specific element from other compounds**
+The program offers the option to focus on compounds containing a specific element. This feature separates compounds with the chosen element and prepares data for compound recommendations.
+6. **Processing and visualization:**
+* The program processes the data, calculates the compound positions based on stoichiometric ratios, and generates plots according to the selected table format.
 6. **Output**
-* Each generated visualization file is saved in the plots directory with a unique name to prevent overwriting previous images.
+* Visualizations are saved as high-resolution image files in the plots directory. Each file is uniquely named to prevent overwriting previous plots.
 
 ## **Prerequisites**
   ```
