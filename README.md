@@ -45,7 +45,11 @@ STEx supports binary compounds visualization with user-customizable layouts
 * Table styles adjust dynamically based on the sheet name:  
   * Rectangle markers for the sheets with **name_table**
   * Circle markers for the sheets with  **name_plot**
-* Edit data_processing/appearance.py to customize plot, markers and colors  
+* You can make new PCA plot based on your element properties, by using ***PCA_plotting/PCA.py*** code
+  1. Put the file with you element properties in the PCA_plotting folder (elements should be in the first column)
+  2. Run the PCA.py
+     * PCA plot will be produced based on the element properties with skipping N/A and not-numerical values
+* Edit ***data_processing/appearance.py*** to customize plot, markers and colors
 
 ### Recommendation Engine
 
