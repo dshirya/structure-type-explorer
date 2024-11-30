@@ -59,5 +59,5 @@ aspect_ratio = 'equal'  # Aspect ratio for plots
 # Plot saving properties
 plot_folder = "plots"
 file_extension = ".png"
-dpi = 600
+dpi = 300
 bbox_inches = 'tight'

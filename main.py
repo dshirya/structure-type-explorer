@@ -3,15 +3,15 @@ import os
 from data_processing.input_handler import input_handler, list_excel_files
 from data_processing.coord_excel_handler import *
 from data_processing.make_periodic_table import periodic_table
-from make_data import *
 from display_data import *
-from data_processing.compound_object import pick_what_separate  
 from make_data.neighbors_search import recommendation_system, save_recommendations_to_excel
+from make_data import make_compound_data  # Import the consolidated function
+from data_processing.compound_object import pick_what_separate
 
 @click.command()
 def main():
     """
-    Processes Excel file and visualizes binary compounds via periodic table.
+    Processes Excel file and visualizes binary and ternary compounds via periodic table.
     Maintained by Brian Hoang & Danila Shiryaev.
     """
 
@@ -26,31 +26,35 @@ def main():
     element_dict = create_element_dict(coord_df)
     periodic_table_ax = periodic_table(coord_df, coord_sheet_name)
 
-    # Generate the compound data
-    compounds = make_binary_data(file_path, user_input_sheet_numbers)
-    target_element = pick_what_separate()  # This will always prompt the user
+    # Generate the compound data dynamically
+    compounds_binary, compounds_ternary = make_compound_data(file_path, user_input_sheet_numbers)
 
-    if target_element:
-        for compound in compounds:
-            compound.separate_by_element(target_element)
-        # Sort compounds to move modified structures with "(with {element})" to the end
-        compounds.sort(key=lambda x: f"(with {target_element})" in x.structure)
+    # Process binary compounds if any
+    if compounds_binary:
+        target_element = pick_what_separate()
+        if target_element:
+            for compound in compounds_binary:
+                compound.separate_by_element(target_element)
+            compounds_binary.sort(key=lambda x: f"(with {target_element})" in x.structure)
 
-        # Display binary data type on the periodic table visualization
-        display_binary_data_type(periodic_table_ax, compounds, element_dict, coord_sheet_name)
-
-        # Generate recommendations and save them to an Excel file
-        top_n = 50  # Specify the number of top recommendations to save (you can adjust this)
-        recommendations = recommendation_system(compounds, target_element, element_dict, top_n)
+        display_binary_data_type(periodic_table_ax, compounds_binary, element_dict, coord_sheet_name)
+        top_n = 50  # Specify the number of top recommendations to save
+        recommendations = recommendation_system(compounds_binary, target_element, element_dict, top_n)
         save_recommendations_to_excel(recommendations, target_element)
-    else:
-        click.echo("Continuing without separating by any element.")
-        # Display binary data type on the periodic table visualization
-        display_binary_data_type(periodic_table_ax, compounds, element_dict, coord_sheet_name)
+        click.echo("Binary compounds processed.")
 
-    # Program continues to run even if no element is chosen for separation
+    # Process ternary compounds if any
+    if compounds_ternary:
+        target_element = pick_what_separate()
+        if target_element:
+            for compound in compounds_ternary:
+                compound.separate_by_element(target_element)
+            compounds_ternary.sort(key=lambda x: f"(with {target_element})" in x.structure)
+
+        display_ternary_data_type(periodic_table_ax, compounds_ternary, element_dict, coord_sheet_name)
+        click.echo("Ternary compounds processed.")
+
     click.echo("Program completed successfully.")
-
     return 0
 
 if __name__ == '__main__':
