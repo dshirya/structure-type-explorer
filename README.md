@@ -4,7 +4,7 @@ A powerful Python-based tool for visualizing binary compounds on periodic tables
 
 ## **How it works?**
 <div align="center">
-<img src="https://github.com/user-attachments/assets/f0543d38-0f01-4491-bee2-cb36f4ef2141" alt="plot_PCA" width="600">
+<img src="https://github.com/user-attachments/assets/a057f327-d124-404f-aff3-7e7cbca19b6f" alt="plot_PCA" width="600">
 </div>
 
 
@@ -38,17 +38,18 @@ Visualizations are saved as high-resolution image files in the plots directory. 
 
 STEx supports binary compounds visualization with user-customizable layouts  
 
-### Dynamic Excel Sheet Loading  
-
-* Select one or multiple sheets for simultaneous visualization   
-* Table styles adjust dynamically based on the sheet name:  
-  *Rectangle markers for the sheets with name_table 
-  *Circle markers for the sheets with  name_plot 
 
 ### Customizable Plots  
 
-* Modify the program_data/element_coordinates.xlsx file to update or create entirely new table layouts  
-* Edit data_processing/markers.py to customize plot markers and colors  
+* Modify the program_data/element_coordinates.xlsx file to update or create entirely new table layouts
+* Table styles adjust dynamically based on the sheet name:  
+  * Rectangle markers for the sheets with **name_table**
+  * Circle markers for the sheets with  **name_plot**
+* You can make new PCA plot based on your element properties, by using ***PCA_plotting/PCA.py*** code
+  1. Put the file with you element properties in the PCA_plotting folder (elements should be in the first column)
+  2. Run the PCA.py
+     * PCA plot will be produced based on the element properties with skipping N/A and not-numerical values
+* Edit ***data_processing/appearance.py*** to customize plot, markers and colors
 
 ### Recommendation Engine
 
@@ -56,15 +57,15 @@ STEx supports binary compounds visualization with user-customizable layouts
 * Uses PCA plots to calculate meaningful x and y axes, scoring potential new elements based on proximity to known compounds
 ### Input Data
 
-The input file must be an Excel file (.xlsx) containing:
-* Formula: The chemical formula of the compound (e.g., Fe2O3)  
+The input file must be an Excel file (.xlsx) containing columns:
+* Formula: The chemical formula of the compound (e.g., Fe<sub>2</sub>O<sub>3</sub>)  
 * Entry Prototype: A classification or structural label for the compound  
 
-Ensure the file is pre-sorted and filtered for binary structures with elements present in the periodic table.
+Ensure the file is preprocessed (you can use [stex-data-preprocessor](https://github.com/dshirya/stex-data-preprocessor)) for binary structures with elements present in the periodic table.
 
 ### Calculations and Output
 
-* The program calculates the molar ratio of elements in the formula.
+* The program calculates the atomic ratio of elements in the formula.
 * The average coordinate of the compound on the selected periodic table format is determined based on the elements’ positions and their stoichiometric ratios.
 
 ## **How Recommendations Work**  
@@ -82,9 +83,5 @@ Install the required Python libraries:
   pip install pandas matplotlib numpy openpyxl click
   ```
 
-## **Customizations**  
 
-* Modify element coordinates: Update the program_data/element_coordinates.xlsx file.
-* Create custom PCA layouts: Supporting code helps generate new PCA tables based on user-defined properties.
-* Customize markers: Edit the data_processing/markers.py file to adjust colors and shapes.
 
