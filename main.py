@@ -31,30 +31,44 @@ def main():
 
     # Process binary compounds if any
     if compounds_binary:
-        target_element = pick_what_separate()
+        target_element = pick_what_separate(compounds_binary)  # Pass the binary compounds
+
         if target_element:
             for compound in compounds_binary:
                 compound.separate_by_element(target_element)
             compounds_binary.sort(key=lambda x: f"(with {target_element})" in x.structure)
 
-        display_binary_data_type(periodic_table_ax, compounds_binary, element_dict, coord_sheet_name)
-        top_n = 50  # Specify the number of top recommendations to save
-        recommendations = recommendation_system(compounds_binary, target_element, element_dict, top_n)
-        save_recommendations_to_excel(recommendations, target_element)
-        click.echo("Binary compounds processed.")
-
+            display_binary_data_type(periodic_table_ax, compounds_binary, element_dict, coord_sheet_name)
+            top_n = 50  # Specify the number of top recommendations to save
+            recommendations = recommendation_system(compounds_binary, target_element, element_dict, top_n)
+            save_recommendations_to_excel(recommendations, target_element)
+            click.echo("Binary compounds processed.")
+        else:
+            # If no target element is selected, just display the binary data
+            display_binary_data_type(periodic_table_ax, compounds_binary, element_dict, coord_sheet_name)
+            click.echo("No target element selected. Binary structures visualization saved to the /plots folder.")
     # Process ternary compounds if any
-    if compounds_ternary:
-        target_element = pick_what_separate()
-        if target_element:
+    if compounds_ternary:           
+        target_elements = pick_what_separate(compounds_ternary)
+
+        if target_elements:
             for compound in compounds_ternary:
-                compound.separate_by_element(target_element)
-            compounds_ternary.sort(key=lambda x: f"(with {target_element})" in x.structure)
+                compound.separate_by_element(target_elements)
+            if isinstance(target_elements, list):
+                formatted_target = " and ".join(target_elements)
+            else:
+                formatted_target = target_elements
 
-        display_ternary_data_type(periodic_table_ax, compounds_ternary, element_dict, coord_sheet_name)
-        click.echo("Ternary compounds processed.")
+            compounds_ternary.sort(key=lambda x: f"(with {formatted_target})" in x.structure)
 
-    click.echo("Program completed successfully.")
+            display_ternary_data_type(periodic_table_ax, compounds_ternary, element_dict, coord_sheet_name)
+            top_n = 50
+            recommendations = recommendation_system(compounds_ternary, target_elements, element_dict, top_n)
+            save_recommendations_to_excel(recommendations, formatted_target)
+            click.echo("Ternary compounds processed.")
+        else:
+            display_ternary_data_type(periodic_table_ax, compounds_ternary, element_dict, coord_sheet_name)
+            click.echo("No target element selected. Ternary structures visualization saved to the /plots folder.")
     return 0
 
 if __name__ == '__main__':

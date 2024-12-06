@@ -24,7 +24,7 @@ def save_plot(structure, coord_sheet_name, ax, folder=props.plot_folder):
     plt.savefig(file_path, dpi=props.dpi, bbox_inches=props.bbox_inches)
     print(f"Plot saved as {file_path}")
 
-def display_ternary_data_type(ax, compounds, element_dict, coord_sheet_name):
+def display_ternary_data_type(ax, compounds, element_dict, coord_sheet_name, common_element=None):
     structures = sorted(set(compound.structure for compound in compounds))
     structure_colors = {structure: props.colors[i % len(props.colors)] for i, structure in enumerate(structures)}
     added_labels = set()
@@ -47,8 +47,6 @@ def display_ternary_data_type(ax, compounds, element_dict, coord_sheet_name):
             structure_markers[structure] = props.marker_types[marker_index]
             marker_index += 1
         marker = structure_markers[structure]
-
-        
 
         if structure not in added_labels:
             ax.scatter(center_x, center_y, edgecolors=color, facecolors='None', label=f'{structure}',

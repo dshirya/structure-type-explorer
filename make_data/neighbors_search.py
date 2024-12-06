@@ -3,19 +3,31 @@ import pandas as pd
 import numpy as np
 
 
-def separate_compounds(compounds, target_element):
+def separate_compounds(compounds, target_elements):
+    """
+    Separates compounds into two sets based on the presence of target elements.
+    - For ternary compounds, it checks if both target elements are present.
+    - For binary compounds, it checks if a single target element is present.
+    """
     elements_with_target = set()
     elements_without_target = set()
+
     for compound in compounds:
         elements = set(compound.elements.keys())
-        if target_element in elements:
-            for element in elements:
-                if element != target_element:
-                    elements_with_target.add(element)
-        else:
-            elements_without_target.update(elements)
+        if isinstance(target_elements, (list, set)) and len(target_elements) == 2:
+            element1, element2 = target_elements
+            if element1 in elements and element2 in elements:
+                elements_with_target.update(elements - {element1, element2})
+            else:
+                elements_without_target.update(elements)
+        elif isinstance(target_elements, str):
+            if target_elements in elements:
+                elements_with_target.update(elements - {target_elements})
+            else:
+                elements_without_target.update(elements)
+
     elements_without_target = elements_without_target - elements_with_target
-    # This part makes sure there's no weird duplicates between both sets
+    # Ensure no duplicates between both sets
     return elements_with_target, elements_without_target
 
 
@@ -24,6 +36,9 @@ def get_distance(coord1, coord2):
 
 
 def recommender(set_with_target, set_without_target, element_dict, top_n=None):
+    """
+    Recommends elements from set_without_target based on their proximity to elements in set_with_target.
+    """
     distances = []
     target_coords = [element_dict[element] for element in set_with_target]
 
@@ -46,13 +61,20 @@ def recommender(set_with_target, set_without_target, element_dict, top_n=None):
     return [f"{element}, {rating:.2f}" for element, rating in ratings]
 
 
-def recommendation_system(compounds, target_element, element_dict, top_n):
-    set_a, set_b = separate_compounds(compounds, target_element)
+def recommendation_system(compounds, target_elements, element_dict, top_n):
+    """
+    Generates recommendations based on proximity of elements in the periodic table.
+    - Handles binary and ternary compounds by checking the type of target_elements.
+    """
+    set_a, set_b = separate_compounds(compounds, target_elements)
     results = recommender(set_a, set_b, element_dict, top_n)
     return results
 
 
 def save_recommendations_to_excel(recommendations, structure, folder="recommendation"):
+    """
+    Saves recommendations to an Excel file, ensuring no overwrites.
+    """
     os.makedirs(folder, exist_ok=True)
     structure_clean = structure.replace(" ", "_")
 
