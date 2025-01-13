@@ -59,7 +59,7 @@ def periodic_table_circle(ax, df):
             ha='center',
             va='center',
             fontsize=props.text_fontsize_circle,
-            zorder=5
+            zorder=5,
         )
 
     return ax

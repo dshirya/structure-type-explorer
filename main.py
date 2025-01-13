@@ -28,47 +28,49 @@ def main():
     # Generate the compound data dynamically
     compounds_binary, compounds_ternary = make_compound_data(file_path, user_input_sheet_numbers)
 
-    # Process binary compounds if any
-    if compounds_binary:
-        target_element = pick_what_separate(compounds_binary)  # Pass the binary compounds
+    # Combine binary and ternary compounds
+    all_compounds = compounds_binary + compounds_ternary
 
-        if target_element:
-            for compound in compounds_binary:
-                compound.separate_by_element(target_element)
-            compounds_binary.sort(key=lambda x: f"(with {target_element})" in x.structure)
+    if all_compounds:
+        # Unified logic for picking fixed elements
+        fixed_elements = pick_what_separate(all_compounds)
 
-            display_binary_data_type(periodic_table_ax, compounds_binary, element_dict, coord_sheet_name)  # noqa: F405
+        if fixed_elements:
+            # Update entry prototypes and process compounds
+            for compound in all_compounds:
+                if len(compound.elements) == 2 and 'binary' in fixed_elements:
+                    compound.separate_by_element(fixed_elements['binary'])
+                elif len(compound.elements) == 3 and 'ternary' in fixed_elements:
+                    compound.separate_by_element(fixed_elements['ternary'])
+
+            # Sort compounds by structure for consistent visualization
+            all_compounds.sort(key=lambda x: x.structure)
+
+            # Display and generate visualizations
+            display_data(periodic_table_ax, all_compounds, element_dict, coord_sheet_name)  # noqa: F405
+
+            # Recommendations
             top_n = 50  # Specify the number of top recommendations to save
-            recommendations = recommendation_system(compounds_binary, target_element, element_dict, top_n)
-            save_recommendations_to_excel(recommendations, target_element)
-            click.echo("Binary compounds processed.")
+            recommendations_binary = recommendation_system(compounds_binary, fixed_elements.get('binary'), element_dict, top_n)
+            recommendations_ternary = recommendation_system(compounds_ternary, fixed_elements.get('ternary'), element_dict, top_n)
+
+            # Save recommendations to Excel
+            if 'binary' in fixed_elements:
+                save_recommendations_to_excel(recommendations_binary, fixed_elements['binary'])
+            if 'ternary' in fixed_elements:
+                formatted_target = " and ".join(fixed_elements['ternary'])
+                save_recommendations_to_excel(recommendations_ternary, formatted_target)
+
+            click.echo("Compounds processed and visualized.")
         else:
-            # If no target element is selected, just display the binary data
+            # Display compounds without separation
             display_binary_data_type(periodic_table_ax, compounds_binary, element_dict, coord_sheet_name)  # noqa: F405
-            click.echo("No target element selected. Binary structures visualization saved to the /plots folder.")
-    # Process ternary compounds if any
-    if compounds_ternary:           
-        target_elements = pick_what_separate(compounds_ternary)
-
-        if target_elements:
-            for compound in compounds_ternary:
-                compound.separate_by_element(target_elements)
-            if isinstance(target_elements, list):
-                formatted_target = " and ".join(target_elements)
-            else:
-                formatted_target = target_elements
-
-            compounds_ternary.sort(key=lambda x: f"(with {formatted_target})" in x.structure)
-
             display_ternary_data_type(periodic_table_ax, compounds_ternary, element_dict, coord_sheet_name)  # noqa: F405
-            top_n = 50
-            recommendations = recommendation_system(compounds_ternary, target_elements, element_dict, top_n)
-            save_recommendations_to_excel(recommendations, formatted_target)
-            click.echo("Ternary compounds processed.")
-        else:
-            display_ternary_data_type(periodic_table_ax, compounds_ternary, element_dict, coord_sheet_name)  # noqa: F405
-            click.echo("No target element selected. Ternary structures visualization saved to the /plots folder.")
+            click.echo("No target elements selected. Visualizations saved to the /plots folder.")
+    else:
+        click.echo("No compounds found in the dataset.")
     return 0
+
 
 if __name__ == '__main__':
     main()
