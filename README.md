@@ -1,6 +1,6 @@
 # Structure Type Explorer (STEx)
 
-A powerful Python-based tool for visualizing binary compounds on periodic tables and recommending elements for novel compound discovery.
+A powerful Python-based tool for visualizing compounds on periodic tables and recommending elements for novel compound discovery.
 
 ## **How it works?**
 <div align="center">
