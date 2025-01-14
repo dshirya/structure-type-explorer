@@ -6,7 +6,8 @@ class Compound:
         self.formula = formula
         self.elements = self.parse_formula(formula)
         self.structure = structure
-        self.separated_elements = None  # To track elements used for separation
+        self.structure_elements = self.parse_formula(structure)  # Parse structure elements
+        self.separated_elements = None  # 
 
     def parse_formula(self, formula):
         pattern = r'([A-Z][a-z]*)(\d*\.?\d*)'
@@ -15,6 +16,16 @@ class Compound:
         for element, count in matches:
             elements[element] = float(count) if count else 1
         return elements
+
+    def compare_elements_with_structure(self):
+        """
+        Compares the number of unique elements in the compound formula
+        with the number of unique elements in the structure.
+        Returns True if the formula has more elements than the structure.
+        """
+        compound_elements_set = set(self.elements.keys())
+        structure_elements_set = set(self.structure_elements.keys())
+        return compound_elements_set > structure_elements_set  # True if co
 
     def separate_by_element(self, target_elements):
         """

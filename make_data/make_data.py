@@ -5,11 +5,13 @@ import click
 
 def make_compound_data(excel_file, user_input_sheet_numbers):
     """
-    Reads the Excel file and categorizes compounds into binary or ternary lists
-    based on the number of elements in the formula.
+    Reads the Excel file and categorizes compounds into binary, ternary, or mixed lists
+    based on the number of elements in the formula and comparison with structure.
     """
     compounds_binary = []
     compounds_ternary = []
+    mixed_compounds = {}  # Dictionary to store lists of different mixed compound groups
+
     excel_file = pd.ExcelFile(excel_file)
     sheet_names = excel_file.sheet_names
 
@@ -34,8 +36,18 @@ def make_compound_data(excel_file, user_input_sheet_numbers):
                 else:
                     click.echo(f"Unsupported number of elements in formula: {compound.formula}")
                     sys.exit()
+
+                # Check if compound has mixed elements
+                if compound.compare_elements_with_structure():
+                    key = tuple(sorted(compound.elements.keys()))  # Unique identifier for mixed groups
+                    if key not in mixed_compounds:
+                        mixed_compounds[key] = []
+                    mixed_compounds[key].append(compound)
         else:
             click.echo("Required columns 'Formula'/'formula' and 'Entry prototype'/'entry prototype' are not found.")
             sys.exit()
 
-    return compounds_binary, compounds_ternary
+    # Convert mixed_compounds dictionary to a list of lists
+    mixed_compounds_groups = list(mixed_compounds.values())
+
+    return compounds_binary, compounds_ternary, mixed_compounds_groups

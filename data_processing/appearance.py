@@ -61,3 +61,58 @@ plot_folder = "plots"
 file_extension = ".png"
 dpi = 300
 bbox_inches = 'tight'
+
+
+
+'''
+
+Mixed compounds
+
+'''
+
+
+# Appearance settings for mixed compound visualizations
+mixed_marker_types = ['o', 's', '^', 'D', 'P', '*', '2', '8', 'X', 'h']
+mixed_marker_size = 150  # Default size for scatter markers (smaller for mixed compounds)
+
+mixed_colors = [
+    "#e63946",  # Red (230, 57, 70)
+    "#457b9d",  # Blue (69, 123, 157)
+    "#f4a261",  # Orange (244, 162, 97)
+    "#2a9d8f",  # Teal (42, 157, 143)
+    "#1d3557",  # Dark Blue (29, 53, 87)
+    "#a8dadc",  # Light Teal (168, 218, 220)
+    "#ffe066",  # Yellow (255, 224, 102)
+    "#6a0572"   # Purple (106, 5, 114)
+]
+
+mixed_shape_linewidth = 4  # Line width for shapes (circles/rectangles) in mixed visualizations
+
+# Mixed plot
+mixed_circle_radius = 0.5  # Radius for circles in mixed periodic table
+mixed_circle_size = 0.44  # Default size for color circles in mixed periodic table
+mixed_text_fontsize_circle = 30  # Font size for text in mixed circles
+
+# Mixed table
+mixed_rectangle_size = 0.9  # Size of rectangles in mixed periodic table
+mixed_text_fontsize_rectangle = 18  # Font size for text in mixed rectangles
+mixed_text_weight_rectangle = 'normal'  # Font weight for text in mixed rectangles
+
+# Mixed figure size and scaling
+mixed_scale_factor = 1.2  # Adjusts the overall figure size for mixed plots
+mixed_x_margin = 1.0  # X-axis margin for mixed plots
+mixed_y_margin = 1.0  # Y-axis margin for mixed plots
+
+# Mixed legend properties
+mixed_legend_props = {
+    "fontsize": 20,
+    "frameon": False,
+    "framealpha": 1,
+    "edgecolor": 'black',
+    "markerscale": 1,
+    "ncol": 2
+}
+
+# Mixed axis properties
+mixed_axis_visibility = False  # Whether to show axis lines and ticks in mixed plots
+mixed_aspect_ratio = 'equal'  # Aspect ratio for mixed plots

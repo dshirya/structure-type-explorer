@@ -3,6 +3,7 @@ from data_processing.input_handler import input_handler, list_excel_files
 from data_processing.coord_excel_handler import *  # noqa: F403
 from data_processing.make_periodic_table import periodic_table
 from display_data import *  # noqa: F403
+from display_data.display_mixed import process_and_visualize_mixed_compounds  # New import
 from make_data.neighbors_search import recommendation_system, save_recommendations_to_excel
 from make_data import make_compound_data  # Import the consolidated function
 from data_processing.compound_object import pick_what_separate
@@ -10,7 +11,7 @@ from data_processing.compound_object import pick_what_separate
 @click.command()
 def main():
     """
-    Processes Excel file and visualizes binary and ternary compounds via periodic table.
+    Processes Excel file and visualizes binary, ternary, and mixed compounds via periodic table.
     Maintained by Brian Hoang & Danila Shiryaev.
     """
 
@@ -26,7 +27,10 @@ def main():
     periodic_table_ax = periodic_table(coord_df, coord_sheet_name)
 
     # Generate the compound data dynamically
-    compounds_binary, compounds_ternary = make_compound_data(file_path, user_input_sheet_numbers)
+    compounds_binary, compounds_ternary, mixed_compounds_groups = make_compound_data(file_path, user_input_sheet_numbers)
+    # Visualize mixed compounds
+    if mixed_compounds_groups:
+        process_and_visualize_mixed_compounds(coord_df, mixed_compounds_groups, coord_sheet_name, element_dict)
 
     # Combine binary and ternary compounds
     all_compounds = compounds_binary + compounds_ternary
@@ -64,8 +68,7 @@ def main():
             click.echo("Compounds processed and visualized.")
         else:
             # Display compounds without separation
-            display_binary_data_type(periodic_table_ax, compounds_binary, element_dict, coord_sheet_name)  # noqa: F405
-            display_ternary_data_type(periodic_table_ax, compounds_ternary, element_dict, coord_sheet_name)  # noqa: F405
+            display_data(periodic_table_ax, all_compounds, element_dict, coord_sheet_name)  # noqa: F405
             click.echo("No target elements selected. Visualizations saved to the /plots folder.")
     else:
         click.echo("No compounds found in the dataset.")
