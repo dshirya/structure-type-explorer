@@ -1,6 +1,6 @@
 import os
 from data_processing.verify_elements import verify_elements
-from data_processing.calculate_compound_coord import calculate_coordinates
+from data_processing.calculate_coordinate import calculate_coordinates
 import data_processing.appearance as props  # Import as a namespace
 from matplotlib import pyplot as plt
 
@@ -48,8 +48,7 @@ def display_data(ax, compounds, element_dict, coord_sheet_name):
             marker_index += 1
         marker = structure_markers[structure]
 
-        #ax.plot(coords_x, coords_y, color=color, linestyle='-', zorder=2, alpha=0.1)
-
+        # Apply color to elements
         if structure not in added_labels:
             ax.scatter(center_x, center_y, edgecolors=color, facecolors='None', label=f'{structure}',
                        zorder=4, s=props.marker_size, marker=marker, alpha=1, linewidths=4)
@@ -59,7 +58,7 @@ def display_data(ax, compounds, element_dict, coord_sheet_name):
                        zorder=4, s=props.marker_size, marker=marker, alpha=1, linewidths=4)
 
         for x, y in original_coordinates:
-            ax.plot([center_x, x], [center_y, y], color=color, linestyle='-', zorder=2, alpha=0.1)
+            ax.plot([center_x, x], [center_y, y], color=color, linestyle='-', zorder=2, alpha=0.1) #line from element to the marker
             if (x, y) not in rectangle_counts:
                 rectangle_counts[(x, y)] = 0
             if (x, y) not in applied_colors:

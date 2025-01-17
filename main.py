@@ -1,6 +1,6 @@
 import click
 from data_processing.input_handler import input_handler, list_excel_files
-from data_processing.coord_excel_handler import *  # noqa: F403
+from data_processing.get_coordinartes import *  # noqa: F403
 from data_processing.make_periodic_table import periodic_table
 from display_data import *  # noqa: F403
 from display_data.display_mixed import process_and_visualize_mixed_compounds  # New import
@@ -12,7 +12,7 @@ from data_processing.compound_object import pick_what_separate
 def main():
     """
     Processes Excel file and visualizes binary, ternary, and mixed compounds via periodic table.
-    Maintained by Brian Hoang & Danila Shiryaev.
+    Maintained by Danila Shiryaev & Brian Hoang.
     """
 
     # Get the file_path from the user's selection

@@ -58,23 +58,24 @@ def pick_what_separate(compounds):
     if not compounds:
         click.echo("No compounds found in the dataset.")
         return None
-
-  
+    
     all_elements = {element for compound in compounds for element in compound.elements}
+
+    has_binary = any(len(compound.elements) == 2 for compound in compounds)
+    has_ternary = any(len(compound.elements) == 3 for compound in compounds)
 
     click.echo("You can specify elements to separate for both binary and ternary compounds.")
 
     fixed_elements = {}
 
-  
-    if click.confirm("Do you want to fix an element for binary compounds?", default=True):
+    if has_binary and click.confirm("Do you want to fix an element for binary compounds?", default=True):
         target_binary = click.prompt("Enter the element to separate for binary compounds", type=str).strip()
         if target_binary not in all_elements:
             click.echo(f"Error: The element '{target_binary}' is not found in the dataset.")
         else:
             fixed_elements['binary'] = target_binary
 
-    if click.confirm("Do you want to fix elements for ternary compounds?", default=True):
+    if has_ternary and click.confirm("Do you want to fix elements for ternary compounds?", default=True):
         target_ternary = click.prompt("Enter one or more elements separated by spaces for ternary compounds", type=str)
         target_ternary = [e.strip() for e in target_ternary.split() if e.strip()]
         invalid_elements = [e for e in target_ternary if e not in all_elements]

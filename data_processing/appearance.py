@@ -6,7 +6,7 @@ Here you can adjust appearance of the plot and periodic table
 
 # Marker types for different structures
 marker_types = ['o', 's', '^', 'D', 'P', '*', '2', '8', 'X', 'h']
-marker_size = 200  # Default size for scatter markers
+marker_size = 150  # Default size for scatter markers
 
 # Colors for different structures
 colors = [
@@ -23,7 +23,7 @@ colors = [
 shape_linewidth = 2  # Line width for shapes (circles/rectangles)
 
 # Plot
-circle_radius = 0.30  # Radius for circles in periodic table (default 0.3)
+circle_radius = 0.3  # Radius for circles in periodic table (default 0.3)
 circle_size = 0.26  # Default size for color circles (default 0.26)
 shrink_factor_circle = 0.054  # How much each circle shrinks with additional layers (better not to change) (default 0.054)
 text_fontsize_circle = 18  # Font size for text in circles (default 18)
@@ -59,7 +59,7 @@ aspect_ratio = 'equal'  # Aspect ratio for plots
 # Plot saving properties
 plot_folder = "plots"
 file_extension = ".png"
-dpi = 300
+dpi = 600
 bbox_inches = 'tight'
 
 

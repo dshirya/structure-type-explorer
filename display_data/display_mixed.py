@@ -1,6 +1,6 @@
 import os
 from data_processing.verify_elements import verify_elements
-from data_processing.calculate_compound_coord import calculate_coordinates
+from data_processing.calculate_coordinate import calculate_coordinates
 import data_processing.appearance as props  # Import as a namespace
 from data_processing.mixed_table import periodic_table_mixed
 from matplotlib import pyplot as plt
@@ -35,9 +35,6 @@ def highlight_and_save(ax, compounds, element_dict, coord_sheet_name, fig, outpu
         coords_x, coords_y = zip(*original_coordinates)
         color = structure_colors.get(structure)
 
-        # Plot connecting lines
-        #ax.plot(coords_x, coords_y, color=color, linestyle='-', zorder=2, alpha=0.1)
-
         # Highlight the center point
         if structure not in added_labels:
             ax.scatter(center_x, center_y, edgecolors=color, facecolors='None', label=f'{structure}',
@@ -59,14 +56,14 @@ def highlight_and_save(ax, compounds, element_dict, coord_sheet_name, fig, outpu
 
     # Add legend dynamically
     ax.legend(
-        loc="upper center",  # Explicitly set the location
-        bbox_to_anchor=(0.5, 1.1),  # Adjust anchor point to move the legend
-        **props.mixed_legend_props  # Other properties from appearance.py
+        loc="upper center",  
+        bbox_to_anchor=(0.5, 1.1),  
+        **props.mixed_legend_props 
     )
 
     # Save the final plot
     if group_index is not None:
-        file_name = f"mixed_group_{group_index}_{coord_sheet_name.replace(' ', '_')}.png"
+        file_name = f"Mixed_{group_index}_{coord_sheet_name.replace(' ', '_')}.png"
     else:
         file_name = f"unnamed_group_{coord_sheet_name.replace(' ', '_')}.png"
 
@@ -86,7 +83,7 @@ def process_and_visualize_mixed_compounds(coord_df, mixed_compounds_groups, coor
         coord_sheet_name (str): Sheet name used to determine plot style.
         element_dict (dict): Dictionary containing element data for coordinate calculations.
     """
-    output_folder = "Mixed compound plots"
+    output_folder = "plots/mixed-compound-plots"
     os.makedirs(output_folder, exist_ok=True)
     
     print("\nMixed Compounds Detected:")
