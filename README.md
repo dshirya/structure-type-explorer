@@ -1,20 +1,32 @@
 # Structure Type Explorer (STEx)
-
-A powerful Python-based tool for visualizing compounds on periodic tables and recommending elements for novel compound discovery.
-
-## **How it works?**
 <div align="center">
-<img src="https://github.com/user-attachments/assets/1387aaff-2c30-4193-8202-3fc35cca941e" alt="plot_PCA" width="600">
+<img src="https://github.com/user-attachments/assets/bf2091d0-17a4-46c2-aa00-1ef6519e2d2f" alt="plot_PCA" >
 </div>
 
+## Purpose
+A powerful for visualizing compounds on periodic tables and recommending elements for novel compound discovery.
 
-1. **Run the program**
+## **Getting started**
+1. **Download all required libraries:**
+
+Install packages listed in `requirements.txt`:
+```bash
+pip install -r requirements.txt
+```
+
+Or you may install all packages at once:
+
+```bash
+pip install pandas matplotlib numpy openpyxl click
+```
+
+2. **Run the program**
 ```
 python main.py
 ```
-2. **Select the file**  
+3. **Select the file**  
 The program will prompt you to choose an Excel file from the same directory as the main.py file. You’ll see a list of available files, and you can select the desired file by entering its corresponding number.
-3. **Select table type**  
+4. **Select table type**  
   Select from one of the four predefined periodic table layouts:  
 	1.	Classical Periodic Table  
 	2.	Long Periodic Table (f-block elements are not separated)  
