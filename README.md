@@ -4,7 +4,7 @@
 </div>
 
 ## Purpose
-A powerful for visualizing compounds on periodic tables and recommending elements for novel compound discovery.
+A powerful tool for visualizing compounds on periodic tables and recommending elements for novel compound discovery.
 
 ## **Getting started**
 1. **Download all required libraries:**
