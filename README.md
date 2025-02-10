@@ -48,7 +48,7 @@ Visualizations are saved as high-resolution image files in the plots directory. 
 
 ### Visualize Compounds  
 
-STEx supports binary compounds visualization with user-customizable layouts  
+STEx supports compounds visualization with user-customizable layouts  
 
 
 ### Customizable Plots  
