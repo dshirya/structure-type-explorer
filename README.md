@@ -4,7 +4,7 @@
 </div>
 
 ## Purpose
-A powerful tool for visualizing compounds on periodic tables and recommending elements for novel compound discovery.
+STEx is a powerful tool for visualizing compounds on periodic tables and recommending elements for novel compound discovery. 
 
 ## **Getting started**
 1. **Download all required libraries:**
@@ -25,75 +25,73 @@ pip install pandas matplotlib numpy openpyxl click
 python main.py
 ```
 3. **Select the file**  
-The program will prompt you to choose an Excel file from the same directory as the main.py file. You’ll see a list of available files, and you can select the desired file by entering its corresponding number.
+The program will prompt you to choose an Excel file from the same directory as the `main.py` file. A list of available files will be displayed, and you can select the desired file by entering its corresponding number. The input file must be an `.xlsx` file with two columns:
+	* **Formula**: The chemical formula of the compound (e.g., Fe2O3)
+	* **Entry Prototype**: A classification or structural label for the compound
+
+The input file must be preprocessed to include only compounds containing elements present in the periodic table. You can use the [stex-data-preprocessor](https://github.com/dshirya/stex-data-preprocessor) to prepare the data
+
+
 4. **Select table type**  
-  Select from one of the four predefined periodic table layouts:  
-	1.	Classical Periodic Table  
-	2.	Long Periodic Table (f-block elements are not separated)  
-	3.	Separated Periodic Table (p-block, d-block, and f-block elements are visually separated)  
-	4.	PCA Table (customizable layout based on PCA values)
+  Users can select from one of four predefined periodic table layouts:  
+	1.	**Classical Periodic Table**  
+	2.	**Long Periodic Table** (f-block elements are not separated)  
+	3.	**Separated Periodic Table** (p-block, d-block, and f-block elements are visually separated)  
+	4.	**PCA Table** (customizable layout based on PCA values)
 <div align="center">
   <img src="https://github.com/user-attachments/assets/0638f8bd-0bda-4240-b672-69cdfd4d5b7c" alt="plot_PCA" width="800"/>
 	</div>
  
-5. **Select whether you want to fix a specific element from other compounds**  
-The program offers the option to focus on compounds containing a specific element. This feature separates compounds with the chosen element and prepares data for compound recommendations.
+5. **Optional: Fix a Specific Element**  
+Users can choose to focus on compounds containing a specific element. The program separates compounds that include the selected element, preparing data for compound recommendations
 6. **Processing and visualization:**  
-The program processes the data, calculates the compound positions based on stoichiometric ratios, and generates plots according to the selected table format.
-6. **Output**  
-Visualizations are saved as high-resolution image files in the plots directory. Each file is uniquely named to prevent overwriting previous plots.
+The program processes the data, calculates the atomic ratios of elements in the formulas, and maps compounds onto the selected periodic table format.
+	* Geometric markers represent element locations
+
+	* Connections between elements in a formula are shown as lines
+
+	* Colors and markers can be customized in `data_processing/appearance.py`
+7. **Output**  
+Visualizations are saved as high-resolution image files in the `plots` directory. Each file is uniquely named to prevent overwriting previous plots.
 
 
 ## **Features**
 
-### Visualize Compounds  
-
-STEx supports compounds visualization with user-customizable layouts  
-
 
 ### Customizable Plots  
 
-* Modify the program_data/element_coordinates.xlsx file to update or create entirely new table layouts
+* Modify the `program_data/element_coordinates.xlsx` file to update or create entirely new table layouts
 * Table styles adjust dynamically based on the sheet name:  
-  * Rectangle markers for the sheets with **name_table**
-  * Circle markers for the sheets with  **name_plot**
-* You can make new PCA plot based on your element properties, by using ***PCA_plotting/PCA.py*** code
-  1. Put the file with you element properties in the PCA_plotting folder (elements should be in the first column)
-  2. Run the PCA.py
+  * Rectangle markers for the sheets with `*_table`
+  * Circle markers for the sheets with  `*_plot`
+* You can make new PCA plot based on your element properties, by using `PCA_plotting/PCA.py` code
+  1. Put the file with you element properties in the `PCA_plotting` folder (elements should be in the first column)
+  2. Run the `PCA.py`
      * PCA plot will be produced based on the element properties with skipping N/A and not-numerical values
 * Edit ***data_processing/appearance.py*** to customize plot, markers and colors
 
 ### Recommendation Engine
 
-* Suggests elements for creating novel compounds based on structural similarities
-* Uses PCA plots to calculate meaningful x and y axes, scoring potential new elements based on proximity to known compounds
-### Input Data
+* Suggests elements for novel compound formation based on structural similarities.
 
-The input file must be an Excel file (.xlsx) containing columns:
-* Formula: The chemical formula of the compound (e.g., Fe<sub>2</sub>O<sub>3</sub>)  
-* Entry Prototype: A classification or structural label for the compound  
+* Uses PCA plots to determine meaningful x and y axes.
 
-Ensure the file is preprocessed (you can use [stex-data-preprocessor](https://github.com/dshirya/stex-data-preprocessor)) for binary structures with elements present in the periodic table.
+* Scores potential new elements based on their proximity to known compounds.
 
-### Calculations and Output
+ **How Recommendations Work**  
+1. The user specifies a “fixed” element (e.g., Ir)
+2. The program identifies all unique binary compounds containing the fixed element (e.g., TbIr, GaIr)
 
-* The program calculates the atomic ratio of elements in the formula.
-* The average coordinate of the compound on the selected periodic table format is determined based on the elements’ positions and their stoichiometric ratios.
+3. It locates the nearest neighbors of these related elements (Tb, Ga), excluding those that already contain the fixed element
 
-## **How Recommendations Work**  
-1. The user specifies a “fixed” element (e.g., Ir).
-2. The program identifies all unique binary compounds with the fixed element (e.g., TbIr, GaIr).
-3. It finds the nearest neighbors of these related elements (Tb, Ga) that do not include the fixed element.
-4. Scores are calculated for each recommended element based on distance, with shorter distances receiving higher scores.
-5. Results are saved in an output spreadsheet for further analysis.
+4. A score is assigned to each recommended element based on distance:
 
+	* Shorter distances receive higher scores
 
-## **Prerequisites**  
-Install the required Python libraries:
+	* Scores are calculated as `100% * (min_distance / element_distance)`
 
-  ```
-  pip install pandas matplotlib numpy openpyxl click
-  ```
+5. Results are saved in an output spreadsheet for further analysis
+
 
 
 
