@@ -1,12 +1,12 @@
 import click
-from data_processing.input_handler import input_handler, list_excel_files
-from data_processing.table_coordinates import *  # noqa: F403
-from data_processing.make_periodic_table import periodic_table
-from display_data import *  # noqa: F403
-from display_data.display_mixed import process_and_visualize_mixed_compounds  # New import
-from make_data.neighbors_search import recommendation_system, save_recommendations_to_excel
-from make_data import make_compound_data  # Import the consolidated function
-from data_processing.compound_object import pick_what_separate
+from utils.input_handler import input_handler, list_excel_files
+from utils.table_coordinates import *  # noqa: F403
+from utils.make_periodic_table import periodic_table
+from core.display_compounds import *  # noqa: F403
+from core.display_mixed import process_and_visualize_mixed_compounds  # New import
+from core.neighbors_search import recommendation_system, save_recommendations_to_excel
+from core import make_compound_data  # Import the consolidated function
+from utils.compound_object import pick_what_separate
 
 @click.command()
 def main():

@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import data_processing.appearance as props
+import utils.appearance as props
 
 def periodic_table(coord_df, coord_sheet_name):
     x_range = coord_df['x'].max() - coord_df['x'].min() + 1

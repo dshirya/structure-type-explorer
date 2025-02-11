@@ -1,7 +1,7 @@
 import os
-from data_processing.verify_elements import verify_elements
-from data_processing.table_coordinates import calculate_coordinates
-import data_processing.appearance as props  # Import as a namespace
+from utils.verify_elements import verify_elements
+from utils.table_coordinates import calculate_coordinates
+import utils.appearance as props  # Import as a namespace
 from matplotlib import pyplot as plt
 
 def save_plot(structure, coord_sheet_name, ax, folder=props.plot_folder):
@@ -24,7 +24,7 @@ def save_plot(structure, coord_sheet_name, ax, folder=props.plot_folder):
     plt.savefig(file_path, dpi=props.dpi, bbox_inches=props.bbox_inches)
     print(f"Plot saved as {file_path}")
 
-def display_data(ax, compounds, element_dict, coord_sheet_name):
+def display_table(ax, compounds, element_dict, coord_sheet_name):
     structures = sorted(set(compound.structure for compound in compounds))
     structure_colors = {structure: props.colors[i % len(props.colors)] for i, structure in enumerate(structures)}
     added_labels = set()
@@ -69,17 +69,13 @@ def display_data(ax, compounds, element_dict, coord_sheet_name):
 
             count = rectangle_counts[(x, y)]
 
-            if "table" in coord_sheet_name.lower():
-                shrink_factor = props.shrink_factor_rect * count
-                size = props.initial_rect_size - shrink_factor
-                offset = props.initial_rect_offset - shrink_factor / 2
-                ax.add_patch(plt.Rectangle((x - offset, y - offset), size, size, fill=False,
+            
+            shrink_factor = props.shrink_factor_rect * count
+            size = props.initial_rect_size - shrink_factor
+            offset = props.initial_rect_offset - shrink_factor / 2
+            ax.add_patch(plt.Rectangle((x - offset, y - offset), size, size, fill=False,
                                            edgecolor=color, zorder=4, linewidth=5, alpha=0.8))
-            else:
-                shrink_factor = props.shrink_factor_circle * count
-                size = props.circle_size - shrink_factor
-                ax.add_patch(plt.Circle((x, y), size, fill=False, edgecolor=color,
-                                        zorder=4, linewidth=4, alpha=0.8)) # !!!
+            
 
             applied_colors[(x, y)].add(color)
             rectangle_counts[(x, y)] += 1

@@ -1,5 +1,5 @@
 import pandas as pd
-from data_processing.compound_object import Compound
+from utils.compound_object import Compound
 import sys
 import click
 

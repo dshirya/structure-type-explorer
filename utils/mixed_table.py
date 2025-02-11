@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import data_processing.appearance as props
+import utils.appearance as props
 
 def periodic_table_mixed(coord_df, mixed_compounds_elements, coord_sheet_name):
     """
