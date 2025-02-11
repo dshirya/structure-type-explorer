@@ -1,5 +1,4 @@
 import re
-import click
 
 class Compound:
     def __init__(self, formula, structure):
@@ -50,39 +49,37 @@ class Compound:
             self.structure += f" (with {target_elements})"
             self.separated_elements = [target_elements]
 
-def pick_what_separate(compounds):
+def pick_what_separate(compounds, binary_element=None, ternary_elements=None):
     """
-    Prompts the user to select elements for separating formulas:
-    Handles both binary and ternary compounds in the same flow.
+    Selects elements for separating formulas based on predefined parameters.
+    :param compounds: List of Compound objects.
+    :param binary_element: String specifying the element for binary compounds.
+    :param ternary_elements: List of strings specifying elements for ternary compounds.
+    :return: Dictionary with fixed elements for binary and ternary compounds.
     """
     if not compounds:
-        click.echo("No compounds found in the dataset.")
-        return None
-    
+        raise ValueError("No compounds found in the dataset.")
+
     all_elements = {element for compound in compounds for element in compound.elements}
+    fixed_elements = {}
 
     has_binary = any(len(compound.elements) == 2 for compound in compounds)
     has_ternary = any(len(compound.elements) == 3 for compound in compounds)
 
-    click.echo("You can specify elements to separate for both binary and ternary compounds.")
+    # Handling binary compounds
+    if has_binary and binary_element:
+        if binary_element not in all_elements:
+            raise ValueError(f"Error: The element '{binary_element}' is not found in the dataset.")
+        fixed_elements['binary'] = binary_element
 
-    fixed_elements = {}
-
-    if has_binary and click.confirm("Do you want to fix an element for binary compounds?", default=True):
-        target_binary = click.prompt("Enter the element to separate for binary compounds", type=str).strip()
-        if target_binary not in all_elements:
-            click.echo(f"Error: The element '{target_binary}' is not found in the dataset.")
-        else:
-            fixed_elements['binary'] = target_binary
-
-    if has_ternary and click.confirm("Do you want to fix elements for ternary compounds?", default=True):
-        target_ternary = click.prompt("Enter one or more elements separated by spaces for ternary compounds", type=str)
-        target_ternary = [e.strip() for e in target_ternary.split() if e.strip()]
-        invalid_elements = [e for e in target_ternary if e not in all_elements]
+    # Handling ternary compounds
+    if has_ternary and ternary_elements:
+        if isinstance(ternary_elements, str):
+            ternary_elements = [ternary_elements]  # Convert single element to list
+        invalid_elements = [e for e in ternary_elements if e not in all_elements]
         if invalid_elements:
-            click.echo(f"Error: The following elements are not found in the dataset: {', '.join(invalid_elements)}")
-        else:
-            fixed_elements['ternary'] = target_ternary
+            raise ValueError(f"Error: The following elements are not found in the dataset: {', '.join(invalid_elements)}")
+        fixed_elements['ternary'] = ternary_elements
 
     return fixed_elements
 

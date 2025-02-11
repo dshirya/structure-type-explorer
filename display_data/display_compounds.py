@@ -1,6 +1,6 @@
 import os
 from data_processing.verify_elements import verify_elements
-from data_processing.calculate_coordinate import calculate_coordinates
+from data_processing.table_coordinates import calculate_coordinates
 import data_processing.appearance as props  # Import as a namespace
 from matplotlib import pyplot as plt
 
@@ -79,7 +79,7 @@ def display_data(ax, compounds, element_dict, coord_sheet_name):
                 shrink_factor = props.shrink_factor_circle * count
                 size = props.circle_size - shrink_factor
                 ax.add_patch(plt.Circle((x, y), size, fill=False, edgecolor=color,
-                                        zorder=4, linewidth=4, alpha=0.8))
+                                        zorder=4, linewidth=4, alpha=0.8)) # !!!
 
             applied_colors[(x, y)].add(color)
             rectangle_counts[(x, y)] += 1

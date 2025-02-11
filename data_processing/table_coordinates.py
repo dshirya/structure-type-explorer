@@ -1,5 +1,16 @@
+import pandas as pd
 import numpy as np
 
+
+def excel_to_dataframe(sheet_name):
+    file_name = 'program_data/table_coordinates.xlsx'
+    df = pd.read_excel(file_name, sheet_name, skiprows=0)
+
+    df_filtered = df[df['Include'] == 1].copy()
+    return df_filtered, sheet_name
+
+def create_element_dict(df):
+    return {row['Symbol']: (row['x'], row['y']) for _, row in df.iterrows()}
 
 def calculate_coordinates(compound, element_dict, fixed_number=None):
     counts = []

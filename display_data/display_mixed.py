@@ -1,6 +1,6 @@
 import os
 from data_processing.verify_elements import verify_elements
-from data_processing.calculate_coordinate import calculate_coordinates
+from data_processing.table_coordinates import calculate_coordinates
 import data_processing.appearance as props  # Import as a namespace
 from data_processing.mixed_table import periodic_table_mixed
 from matplotlib import pyplot as plt

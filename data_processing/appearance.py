@@ -23,9 +23,10 @@ colors = [
 shape_linewidth = 2  # Line width for shapes (circles/rectangles)
 
 # Plot
-circle_radius = 0.3  # Radius for circles in periodic table (default 0.3)
-circle_size = 0.26  # Default size for color circles (default 0.26)
-shrink_factor_circle = 0.054  # How much each circle shrinks with additional layers (better not to change) (default 0.054)
+multiplier = 1
+circle_radius = 0.3 * multiplier # Radius for circles in periodic table (default 0.3)
+circle_size = 0.26 * multiplier # Default size for color circles (default 0.26)
+shrink_factor_circle = 0.054 * multiplier  # How much each circle shrinks with additional layers (better not to change) (default 0.054)
 text_fontsize_circle = 18  # Font size for text in circles (default 18)
 
 # Table 
@@ -43,7 +44,7 @@ y_margin = 1.5  # Y-axis margin for plots (default 1.5)
 
 # Legend properties
 legend_props = {
-    "fontsize": 24,
+    "fontsize": 24, ##24
     "loc": 'upper center',
     "frameon": False,
     "framealpha": 1,

@@ -43,4 +43,5 @@ def input_handler(file_path):
         sys.exit()
     else:
         user_input_sheet_numbers = [int(s.strip()) - 1 for s in user_response.split()]
+        print(f"Sheet number {user_input_sheet_numbers}")
     return user_input_sheet_numbers

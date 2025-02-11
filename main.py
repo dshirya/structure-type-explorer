@@ -1,6 +1,6 @@
 import click
 from data_processing.input_handler import input_handler, list_excel_files
-from data_processing.get_coordinartes import *  # noqa: F403
+from data_processing.table_coordinates import *  # noqa: F403
 from data_processing.make_periodic_table import periodic_table
 from display_data import *  # noqa: F403
 from display_data.display_mixed import process_and_visualize_mixed_compounds  # New import
