@@ -3,11 +3,14 @@ from utils.compound_object import Compound
 import sys
 import click
 
-def make_compound_data(excel_file, user_input_sheet_numbers):
+def make_compound_data(excel_file, user_input_sheet_names):
     """
     Reads the Excel file and categorizes compounds into binary, ternary, or mixed lists
     based on the number of elements in the formula and comparison with structure.
     """
+    if hasattr(user_input_sheet_names, "value"):
+        user_input_sheet_names = list(user_input_sheet_names.value)
+    
     compounds_binary = []
     compounds_ternary = []
     mixed_compounds = {}  # Dictionary to store lists of different mixed compound groups
@@ -15,8 +18,12 @@ def make_compound_data(excel_file, user_input_sheet_numbers):
     excel_file = pd.ExcelFile(excel_file)
     sheet_names = excel_file.sheet_names
 
-    for sheet_number in user_input_sheet_numbers:
-        df = pd.read_excel(excel_file, sheet_name=sheet_names[sheet_number])
+    for sheet_name in user_input_sheet_names:
+        if sheet_name not in sheet_names:
+            click.echo(f"Sheet {sheet_name} not found in the Excel file.")
+            sys.exit()
+        
+        df = pd.read_excel(excel_file, sheet_name=sheet_name)
         # Standardize column names
         df.columns = [col.lower() for col in df.columns]
 
@@ -51,3 +58,4 @@ def make_compound_data(excel_file, user_input_sheet_numbers):
     mixed_compounds_groups = list(mixed_compounds.values())
 
     return compounds_binary, compounds_ternary, mixed_compounds_groups
+ 

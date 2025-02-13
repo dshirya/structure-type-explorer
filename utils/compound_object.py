@@ -71,7 +71,9 @@ def pick_what_separate(compounds, binary_element=None, ternary_elements=None):
         if binary_element not in all_elements:
             raise ValueError(f"Error: The element '{binary_element}' is not found in the dataset.")
         fixed_elements['binary'] = binary_element
-
+        [compound.separate_by_element(fixed_elements.get('binary')) for compound in compounds if len(compound.elements) == 2]
+        compounds.sort(key=lambda x: x.structure)
+    
     # Handling ternary compounds
     if has_ternary and ternary_elements:
         if isinstance(ternary_elements, str):
@@ -80,6 +82,9 @@ def pick_what_separate(compounds, binary_element=None, ternary_elements=None):
         if invalid_elements:
             raise ValueError(f"Error: The following elements are not found in the dataset: {', '.join(invalid_elements)}")
         fixed_elements['ternary'] = ternary_elements
+        [compound.separate_by_element(fixed_elements.get('ternary')) for compound in compounds if len(compound.elements) == 3]
+        compounds.sort(key=lambda x: x.structure)
+    
 
     return fixed_elements
 
