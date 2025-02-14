@@ -4,7 +4,7 @@ from utils import appearance as props
 from utils import pca_coordinates
 from utils.verify_elements import verify_elements
 
-def save_plot(structure, coord_sheet_name, ax, folder=props.plot_folder):
+def save_plot(structure, coord_sheet_name, ax, folder=props.plot_folder) -> None:
     """
     Saves the plotted periodic table.
 
@@ -30,7 +30,7 @@ def save_plot(structure, coord_sheet_name, ax, folder=props.plot_folder):
     plt.savefig(file_path, dpi=props.dpi, bbox_inches=props.bbox_inches)
     print(f"Plot saved as {file_path}")
 
-def PCA_plot(compounds, use_full_element_list=False):
+def PCA_plot(compounds, use_full_element_list=False) -> plt.Axes:
     """
     Plots a periodic table dynamically based on the elements present in the dataset.
 
@@ -76,7 +76,7 @@ def PCA_plot(compounds, use_full_element_list=False):
 
     return ax
 
-def display_data(ax, compounds, element_dict):
+def display_data(ax, compounds, element_dict) -> None:
     """
     Highlights compounds by marking their elements with different styles.
 
@@ -94,12 +94,17 @@ def display_data(ax, compounds, element_dict):
     structure_markers = {}
     marker_index = 0
 
+    coordinates_cache = {}
     for compound in compounds:
         verify_elements(compound, element_dict)
         structure = compound.structure
 
-        center, original_coordinates = pca_coordinates.calculate_coordinates(compound, element_dict)
+        if compound not in coordinates_cache:
+            coordinates_cache[compound] = pca_coordinates.calculate_coordinates(compound, element_dict)
+        
+        center, original_coordinates = coordinates_cache[compound]
         center_x, center_y = center
+        color = structure_colors.get(structure)
         color = structure_colors.get(structure)
 
         if structure not in structure_markers:
@@ -138,4 +143,4 @@ def display_data(ax, compounds, element_dict):
             rectangle_counts[(x, y)] += 1
 
     plt.legend(**props.legend_props)
-    save_plot(compounds[0].structure, "PCA_plot", ax)
+    save_plot(compounds[0].structure, 'PCA_plot', ax)
