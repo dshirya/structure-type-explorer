@@ -1,7 +1,7 @@
 import os
 import matplotlib.pyplot as plt
-import utils.appearance as props
-from utils.pca_coordinates import generate_coordinates, create_element_dict, calculate_coordinates
+from utils import appearance as props
+from utils import pca_coordinates
 from utils.verify_elements import verify_elements
 
 def save_plot(structure, coord_sheet_name, ax, folder=props.plot_folder):
@@ -42,8 +42,8 @@ def PCA_plot(compounds, use_full_element_list=False):
         ax: Matplotlib axis object.
     """
     # Generate PCA-based element coordinates dynamically
-    coord_df = generate_coordinates(compounds, use_full_element_list)
-    element_dict = create_element_dict(coord_df)
+    coord_df = pca_coordinates.generate_coordinates(compounds, use_full_element_list)
+    element_dict = pca_coordinates.create_element_dict(coord_df)
 
     # Define figure size dynamically
     x_range = coord_df['x'].max() - coord_df['x'].min() + 1
@@ -72,8 +72,7 @@ def PCA_plot(compounds, use_full_element_list=False):
     
     # Highlight compounds dynamically
     display_data(ax, compounds, element_dict)
-    
-    
+
 
     return ax
 
@@ -99,7 +98,7 @@ def display_data(ax, compounds, element_dict):
         verify_elements(compound, element_dict)
         structure = compound.structure
 
-        center, original_coordinates = calculate_coordinates(compound, element_dict)
+        center, original_coordinates = pca_coordinates.calculate_coordinates(compound, element_dict)
         center_x, center_y = center
         color = structure_colors.get(structure)
 

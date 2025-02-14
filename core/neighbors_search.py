@@ -88,5 +88,7 @@ def save_recommendations_to_excel(recommendations, structure, folder="recommenda
         counter += 1
 
     df = pd.DataFrame([rec.split(", ") for rec in recommendations], columns=["Element", "Value"])
+    df.index = df.index + 1
     df.to_excel(file_path, index=False)
+    print(df)
     print(f"Recommendations saved as {file_path}")
