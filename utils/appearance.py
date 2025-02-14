@@ -3,33 +3,34 @@
 Here you can adjust appearance of the plot and periodic table
 
 '''
+multiplier = 1.5
+
 
 # Marker types for different structures
 marker_types = ['o', 's', 'D', '^', '*', 'P', '2', '8', 'X', 'h']
-marker_size = 200  # Default size for scatter markers
+marker_size = 150 * multiplier  # Default size for scatter markers
 
 # Colors for different structures
-colors = [
-   
+colors = [  
     "#c3121e",  # Sangre (195, 18, 30)
     "#0348a1",  # Neptune (3, 72, 161)
     "#ffb01c",  # Pumpkin (255, 176, 28)
     "#027608",  # Clover (2, 118, 8)
     "#1dace6",  # Cerulean (29, 172, 214)
     "#9c5300",  # Cocoa (156, 83, 0)
-    "#9966cc",  # Amethyst (153, 102, 204)
-    
+    "#9966cc",  # Amethyst (153, 102, 204) 
 ]
 
 
 shape_linewidth = 2  # Line width for shapes (circles/rectangles)
 
 # Plot
-multiplier = 1.3
 circle_radius = 0.3 * multiplier # Radius for circles in periodic table (default 0.3)
-circle_size = 0.275 * multiplier # Default size for color circles (default 0.26)
+circle_size = circle_radius - 0.04 # Default size for color circles (default 0.26)
 shrink_factor_circle = 0.054  # How much each circle shrinks with additional layers (better not to change) (default 0.054)
-text_fontsize_circle = 24  # Font size for text in circles (default 18)
+text_fontsize_circle = 18 * multiplier  # Font size for text in circles (default 18)
+linewidth_circle = 4 
+
 
 # Table 
 rectangle_size = 1.0  # Size of rectangles in periodic table (default 1)
@@ -46,7 +47,7 @@ y_margin = 1.5  # Y-axis margin for plots (default 1.5)
 
 # Legend properties
 legend_props = {
-    "fontsize": 24, ##24
+    "fontsize": 18 * multiplier, ##24
     "loc": 'upper center',
     "frameon": False,
     "framealpha": 1,

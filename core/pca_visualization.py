@@ -101,7 +101,6 @@ def display_data(ax, compounds, element_dict):
 
         center, original_coordinates = calculate_coordinates(compound, element_dict)
         center_x, center_y = center
-        coords_x, coords_y = zip(*original_coordinates)
         color = structure_colors.get(structure)
 
         if structure not in structure_markers:
@@ -134,7 +133,7 @@ def display_data(ax, compounds, element_dict):
             shrink_factor = props.shrink_factor_circle * count
             size = props.circle_size - shrink_factor
             ax.add_patch(plt.Circle((x, y), size, fill=False, edgecolor=color,
-                                        zorder=4, linewidth=4, alpha=0.8))  # !!!
+                                        zorder=4, linewidth=props.linewidth_circle, alpha=0.8))  
 
             applied_colors[(x, y)].add(color)
             rectangle_counts[(x, y)] += 1

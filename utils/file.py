@@ -5,32 +5,33 @@ from IPython.display import display
 def select_sheets(file_path):
     """
     Function to interactively select sheets from an Excel file using ipywidgets.
-    Returns a list of selected sheet names.
+    Ensures the output prints only once.
     """
     # Load the sheet names
     xls = pd.ExcelFile(file_path)
     sheet_names = xls.sheet_names
-    
+
     # Create a selection widget
     sheet_selector = widgets.SelectMultiple(
         options=sheet_names,
         description='Sheets:',
         disabled=False
     )
-    
-    # Display widget
-    display(sheet_selector)
-    
-    # Button to confirm selection
+
     output = widgets.Output()
+    selected_sheets = []  # Store the selected sheet names
+
     def on_confirm(change):
+        """Handles button click to store and display selected sheets."""
+        output.clear_output()
         with output:
-            output.clear_output()
-            selected_sheets = list(sheet_selector.value)
-            print(f"Selected sheet names: {selected_sheets}")
-    
+            selected_sheets[:] = list(sheet_selector.value)  # Update list in-place
+
+    # Ensure only one event binding happens
     confirm_button = widgets.Button(description="Confirm Selection")
     confirm_button.on_click(on_confirm)
-    display(confirm_button, output)
+
+    # Display widgets
+    display(sheet_selector, confirm_button, output)
     
-    return sheet_selector
+    return selected_sheets  # Return the list of selected sheets
